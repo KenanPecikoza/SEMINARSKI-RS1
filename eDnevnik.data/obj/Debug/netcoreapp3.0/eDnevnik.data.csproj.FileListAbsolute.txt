@@ -1,0 +1,12 @@
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\bin\Debug\netcoreapp3.0\eDnevnik.data.deps.json
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\bin\Debug\netcoreapp3.0\eDnevnik.data.runtimeconfig.json
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\bin\Debug\netcoreapp3.0\eDnevnik.data.runtimeconfig.dev.json
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\bin\Debug\netcoreapp3.0\eDnevnik.data.dll
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\bin\Debug\netcoreapp3.0\eDnevnik.data.pdb
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\obj\Debug\netcoreapp3.0\eDnevnik.data.AssemblyInfoInputs.cache
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\obj\Debug\netcoreapp3.0\eDnevnik.data.AssemblyInfo.cs
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\obj\Debug\netcoreapp3.0\eDnevnik.data.csproj.CoreCompileInputs.cache
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\obj\Debug\netcoreapp3.0\eDnevnik.data.dll
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\obj\Debug\netcoreapp3.0\eDnevnik.data.pdb
+C:\Users\Kenan\Source\Repos\webapp\eDnevnik\eDnevnik.data\obj\Debug\netcoreapp3.0\eDnevnik.data.genruntimeconfig.cache
+C:\Users\Kenan\source\repos\webapp\eDnevnik\eDnevnik.data\obj\Debug\netcoreapp3.0\eDnevnik.data.csprojAssemblyReference.cache

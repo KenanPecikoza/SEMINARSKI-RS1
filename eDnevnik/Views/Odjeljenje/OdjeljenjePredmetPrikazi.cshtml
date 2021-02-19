@@ -1,0 +1,68 @@
+﻿@using eDnevnik.data.ViewModels
+@{
+    ViewData["Title"] = "Razredi kojima predajem";
+    string pozvaniKontroler = ViewContext.RouteData.Values["controller"] as string;
+    string porukaNeuspjesno = null;
+    string porukaUspjesno = null;
+    if (pozvaniKontroler == "Nastavnik")
+    {
+        porukaNeuspjesno = TempData["porukaNeuspjesno"] as string;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+        porukaUspjesno = (string)TempData["porukaUspjesno"];
+    }
+}
+@model IEnumerable<OdjeljenjePredmetPrikaziVM>
+<style>
+        .thead-dark {
+            color: #fff;
+            background-color: #212529;
+            border-color: #32383e;
+            font-weight:600;
+        }
+</style>
+
+
+<div class="container">
+
+    <div class="row">
+        <h5 class="col-lg-10">Odjeljenja kojima predajete</h5>
+    </div>  
+    <br />
+    <br />
+    <div class="row">
+        <table id="myTable" class="table" style="text-align:center; ">
+            <thead class="thead-dark">
+                <tr>
+                    <td>Naziv odjeljenja </td>
+                    <td>Naziv predmeta </td>
+                    <td>Skolska godina</td>
+                    <td>Akcija</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        <td>@i.NazivOdjeljenja</td>
+                        <td>@i.NazivPredmeta</td>
+                        <td>@i.SkolskaGodina</td>
+                        @if (i.Aktuelna)
+                        {
+                            <td><a class="btn btn-primary" asp-action="PrikaziUcenikeUOdjeljenju" asp-route-PPO="@i.PredavaciPredmetiOdjeljenjeId">Odaberi</a></td>
+                        }
+                        else
+                        {
+                          <td><a style="color:#fff" class="btn btn-secondary">Odaberi</a></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

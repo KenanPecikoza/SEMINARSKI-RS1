@@ -1,0 +1,62 @@
+﻿@using eDnevnik.data.ViewModels;
+
+@{
+    ViewData["Title"] = "Dodjeli predmete odjeljenju ";
+    string porukaNeuspjesno = (string)TempData["porukaNeuspjesno"];
+    string porukaUspjesno = (string)TempData["porukaUspjesno"];
+}
+@model DodjeliPredmetVM
+<h1>Dodjeli predmete odjeljenju</h1>
+<br />
+<style>
+    .big-checkbox {
+        width: 30px;
+        height: 30px;
+    }
+    .checkbox {
+        display: flex;
+        justify-content: space-between;
+    }
+    #grey {
+        background-color: #212529;
+        color:#fefefe;
+        display:flex;
+    }
+</style>
+<div class="container">
+    @if (porukaUspjesno != null)
+    {
+        <div class="alert alert-success" id="msg" role="alert">
+            @porukaUspjesno
+        </div>
+    }
+
+    @if (porukaNeuspjesno != null)
+    {
+        <div class="alert alert-danger" id="msg" role="alert">
+            @porukaNeuspjesno
+        </div>
+    }
+    <form action="/Odjeljenje/DodjeliPredmetSnimi" class="table table-bordered" method="post">
+        <ul class="list-group">
+            <li class="list-group-item" id="grey">
+                <div class="form-check">
+                    <span>Predmet - naziv predavača  </span>
+                </div>
+            </li>
+            @for (int i = 0; i < Model.predmeti.Count; i++)
+            {
+                <li class="list-group-item">
+                    <div class="form-check checkbox">
+                        <input type="hidden" asp-for="@Model.predmeti[i].Value" />
+                        <span>@Model.predmeti[i].Text</span>
+                        <input class="big-checkbox" asp-for="predmeti[i].Selected" />
+                    </div>
+                </li>
+            }
+        </ul>
+        <input type="hidden" asp-for="OdjeljenjeID" />
+        <br />
+        <button type="submit" style="color:white; cursor:pointer;" class="btn btn-success float-right">Snimi</button>
+    </form>
+</div>

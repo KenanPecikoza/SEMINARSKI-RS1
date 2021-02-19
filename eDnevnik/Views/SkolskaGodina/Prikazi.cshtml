@@ -1,0 +1,60 @@
+﻿@using SeminarskiRS1.Model
+@using eDnevnik.data.ViewModels;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Core.Common;
+@using eDnevnik.Helper;
+@{
+    ViewData["Title"] = "SkolskaGodina";
+    string porukaNeuspjesno = (string)TempData["porukaNeuspjesno"];
+    string porukaUspjesno = (string)TempData["porukaUspjesno"];
+}
+
+@model IEnumerable<SkolskaGodinaVM>
+
+<div class="container">
+    @if (porukaUspjesno != null)
+    {
+        <div class="alert alert-success" id="msg" role="alert">
+            @porukaUspjesno
+        </div>
+    }
+
+    @if (porukaNeuspjesno != null)
+    {
+        <div class="alert alert-danger" id="msg" role="alert">
+            @porukaNeuspjesno
+        </div>
+    }
+
+    <div class="row">
+        <h5 class="col-lg-10">Školske godine</h5>
+        <a class="col-lg-3 btn btn-primary" asp-action="Dodaj">Dodaj novu skolsku godinu</a>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <table id="myTable" class="table" style="text-align:center; ">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Skolska Godina</th>
+                    <th>Akuelna</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td>@x.Naziv</td>
+                        <td><a> @(x.Aktuelna? "DA":"NE")  </a></td>
+                        <td>
+                            <a asp-action="Uredi" asp-controller="SkolskaGodina" asp-route-ID="@x.SkolskaGodinaID" class="btn btn-success">Uredi</a>
+                            <a style="color:white;cursor:pointer;" asp-action="Obrisi" asp-controller="SkolskaGodina" asp-route-ID="@x.SkolskaGodinaID" class="btn btn-danger">Obriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

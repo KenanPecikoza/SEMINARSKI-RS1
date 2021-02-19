@@ -1,0 +1,91 @@
+﻿@using eDnevnik.data.ViewModels;
+@using X.PagedList.Mvc.Core;
+@using eDnevnik.Helper;
+@using X.PagedList;
+@{
+    ViewData["Title"] = "Prikaz ucenika";
+    string pozvaniKontroler = ViewContext.RouteData.Values["controller"] as string;
+    string porukaNeuspjesno = TempData["porukaNeuspjesno"] as string;
+    string porukaUspjesno = TempData["porukaUspjesno"] as string;
+    if (pozvaniKontroler == "Nastavnik")
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+}
+
+
+@model IPagedList<UcenikPrikaziVM>
+
+<div class="container">
+    @if (porukaUspjesno != null)
+    {
+        <div class="alert alert-success" id="msg" role="alert">
+            @porukaUspjesno
+        </div>
+    }
+
+    @if (porukaNeuspjesno != null)
+    {
+        <div class="alert alert-danger" id="msg" role="alert">
+            @porukaNeuspjesno
+        </div>
+    }
+    @if (Model.FirstOrDefault().User !="Admin")
+    {
+        <div class="row">
+            <h5 class="col-lg-10">Pregled učenika</h5>
+            <a class="col-lg-2 btn btn-primary" asp-action="Dodaj">Dodaj Učenika</a>
+        </div>
+    }
+
+    <br />
+    <br />
+    <div class="row">
+        <table id="myTable" class="table" style="text-align:center; ">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Ime i prezime</th>
+                    <th>Ime roditelja</th>
+                    <th>Pol</th>
+                    <th>JBMG</th>
+                    @if (Model.FirstOrDefault().User != "Admin")
+                    {
+                    <th>Broj u dnevniku</th> 
+                    }
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+                {
+                    @if (x.BrojUDnevniku != 0)
+                    {
+                        <tr>
+                            <td>@x.Ime @x.Prezime</td>
+                            <td>@x.ImeRoditelja</td>
+                            <td>@x.Pol</td>
+                            <td>@x.JMBG</td>
+                            @if (Model.FirstOrDefault().User != "Admin")
+                            {
+                                <th>@x.BrojUDnevniku</th>
+                            }
+                            <td>
+                                <a class="btn btn-primary" asp-controller="Ucenik" asp-action="Detalji" asp-route-UcenikID="@x.UceniciID">Detalji</a>
+                                <a asp-controller="Ucenik" asp-action="Uredi" asp-route-UcenikID="@x.UceniciID" class="btn btn-success">Uredi</a>
+                                <a style="color:white;cursor:pointer;" asp-controller="Ucenik" asp-action="Obrisi" asp-route-UcenikID="@x.UceniciID" class="btn btn-danger">Obriši</a>
+                            </td>
+                        </tr>
+
+                    }
+
+                }
+            </tbody>
+        </table>
+        @Html.PagedListPager(Model,
+            page => Url.Action("Prikazi", new { page }), new PaginationStyling())
+    </div>
+</div>

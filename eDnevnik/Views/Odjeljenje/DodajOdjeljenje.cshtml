@@ -1,0 +1,171 @@
+﻿@using eDnevnik.data.ViewModels;
+
+@{
+    ViewData["Title"] = "DodajOdjeljenje";
+    string pozvaniKontroler = ViewContext.RouteData.Values["controller"] as string;
+    string pozvanaAkcija = ViewContext.RouteData.Values["Action"] as string;
+    string porukaNeuspjesno  = (string)TempData["porukaNeuspjesno"];
+    string porukaUspjesno =  (string)TempData["porukaUspjesno"];
+    if (pozvaniKontroler == "Nastavnik")
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+    }
+}
+@model OdjeljenjeDodajVM
+
+<div class="container">
+
+    @if (porukaUspjesno != null && pozvanaAkcija== "OdjeljenjeUredi")
+    {
+        <div class="alert alert-success" id="msg" role="alert">
+            @porukaUspjesno
+        </div>
+    }
+
+    @if (porukaNeuspjesno != null && pozvanaAkcija == "OdjeljenjeUredi")
+    {
+        <div class="alert alert-danger" id="msg" role="alert">
+            @porukaNeuspjesno
+        </div>
+    }
+
+    <div class="row">
+        <h5 class="col-lg-10">Forma za dodavanje odjeljenja</h5>
+        @if (Model.LogiraniKorisnik == 0)
+        {
+            <a class="col-lg-2 btn btn-primary" asp-action="PrikaziOdjeljenja" asp-controller="Odjeljenje">Lista odjeljenja</a>
+        }
+    </div>
+    <br />
+    <div class="row">
+        <form class="col-lg-12" method="post" asp-controller="Odjeljenje" asp-action="Snimi">
+            @Html.HiddenFor(p => p.OdjeljenjeID)
+
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    @if (Model.LogiraniKorisnik == 0)
+                    {
+                        <label asp-for="Razred">Razred</label>
+                        <input asp-for="Razred" min="1" max="9" value="1" class="form-control" />
+                    }
+                    else
+                    {
+                        <label asp-for="Razred">Razred</label>
+                        <input  disabled asp-for="Razred" min="1" max="9" value="1" class="form-control" />
+                    }
+
+                </div>
+                <div class="form-group col-md-2">
+                    @if (Model.LogiraniKorisnik == 0)
+                    {
+                        <label asp-for="Oznaka">Oznaka</label>
+                        <input asp-for="Oznaka" class="form-control" />
+                    }
+                    else
+                    {
+                        <label asp-for="Oznaka">Oznaka</label>
+                        <input disabled asp-for="Oznaka" class="form-control" />
+                    }
+
+                </div>
+                <div class="form-group col-md-3">
+                    @if (Model.LogiraniKorisnik == 0)
+                    {
+                        <label asp-for="Smjena">Smjena</label>
+                        <input asp-for="Smjena" class="form-control" />
+                    }
+                    else
+                    {
+                        <label asp-for="Smjena">Smjena</label>
+                        <input disabled asp-for="Smjena" class="form-control" />
+                    }
+                </div>
+                <div class="form-group col-md-5">
+                    @if (Model.LogiraniKorisnik == 0)
+                    {
+                        <label asp-for="Opis">Opis</label>
+                        <input asp-for="Opis" class="form-control" />
+                    }
+                    else
+                    {
+                        <label asp-for="Opis">Opis</label>
+                        <input disabled asp-for="Opis" class="form-control" />
+                    }
+
+
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label asp-for="RazrednikID">Razrednik</label>
+                    @if (Model.LogiraniKorisnik == 0)
+                    {
+                        <select asp-for="RazrednikID" asp-items="@Model.Nastavnici" class="form-control">
+                            <option disabled selected>(odaberite razrednika)</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <select disabled asp-for="RazrednikID" asp-items="@Model.Nastavnici" class="form-control">
+                        </select>
+                    }
+
+
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="PredsjenikID">Predsjednik</label>
+                    <select asp-for="PredsjenikID" asp-items="@Model.Ucenici" class="form-control">
+                        <option disabled selected>(odaberite predsjednika)</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="BlagajnikID">Blagajnik</label>
+                    <select asp-for="BlagajnikID" asp-items="@Model.Ucenici" class="form-control">
+                        <option disabled selected>(odaberite blagajnika)</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3">
+
+                    @if (Model.LogiraniKorisnik == 0)
+                    {
+                        <label asp-for="SkolskaGodinaID">SkolskaGodina</label>
+                        <select asp-for="SkolskaGodinaID" asp-items="@Model.SkolskeGodine" class="form-control">
+                            <option disabled selected>(odaberite skolsku godinu)</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <label asp-for="SkolskaGodinaID">SkolskaGodina</label>
+                        <select disabled asp-for="SkolskaGodinaID" asp-items="@Model.SkolskeGodine" class="form-control">
+                        </select>
+                    }
+
+                </div>
+                <div class="form-group col-md-1">
+                    @if (Model.LogiraniKorisnik == 0 && !Model.Aktivno)
+                    {
+                        <label asp-for="Aktivno">Aktivno</label>
+                        <input asp-for="Aktivno" class="form-control" />
+                    }
+                    else
+                    {
+                        <label asp-for="Aktivno">Aktivno</label>
+                        <input disabled asp-for="Aktivno" class="form-control" />
+                    }
+
+                </div>
+            </div>
+            <br />
+            @Html.AntiForgeryToken()
+            <button type="submit" style="color:white; cursor:pointer;" class="btn btn-success float-right">Snimi</button>
+
+        </form>
+    </div>
+</div>
+

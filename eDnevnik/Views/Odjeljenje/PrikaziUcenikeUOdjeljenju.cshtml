@@ -1,0 +1,49 @@
+﻿@using eDnevnik.data.ViewModels
+@{
+    ViewData["Title"] = "PrikaziUcenikeUOdjeljenju";
+    string pozvaniKontroler = ViewContext.RouteData.Values["controller"] as string;
+    string porukaNeuspjesno = null;
+    string porukaUspjesno = null;
+    if (pozvaniKontroler == "Nastavnik")
+    {
+        porukaNeuspjesno = TempData["porukaNeuspjesno"] as string;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+        porukaUspjesno = (string)TempData["porukaUspjesno"];
+    }
+}
+@model PrikaziUcenikeUOdjeljenjuVM
+<h3>Predmet - @Model.Predmet /  / Odjeljenje - @Model.Odjeljenje / / Predavač - @Model.Predavac </h3>
+
+
+<div class="row">
+    <table id="myTable" class="table" style="text-align:center; ">
+        <thead class="thead-dark">
+            <tr>
+                <th>Ime i prezime</th>
+                <th>Ime roditelja</th>
+                <th>Broj u dnevniku</th>
+                <th>Zakljucna ocjena</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Ucenici)
+            {
+                <tr>
+                    <td>@x.Ime @x.Prezime</td>
+                    <td>@x.ImeRoditelja</td>
+                    <td>@x.BrojUDnevniku</td>
+                    <td>@(x.ZakljucnaOcjena)</td>
+                    <td>
+                        <a href="/Odjeljenje/ZakljuciOcjenu/?ucenikID=@x.UceniciOdjeljenjeID&predavacId=@x.PredavaciOdjeljenjeID" class="btn btn-primary">Zaključi ocjenu</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

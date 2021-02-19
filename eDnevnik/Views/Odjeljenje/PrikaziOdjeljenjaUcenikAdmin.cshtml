@@ -1,0 +1,150 @@
+﻿@using eDnevnik.data.ViewModels;
+
+@{
+    ViewData["Title"] = "PrikaziOdjeljenjaUcenikAdmin";
+}
+@model PrikaziOdjeljenjeUcenikAdminVM
+    <style>
+        .collapsible {
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            margin-top: 0.2%;
+            margin-bottom: 0.2%;
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+        .collapsible-false {
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            margin-top: 0.2%;
+            margin-bottom: 0.2%;
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+            .active, .collapsible:hover {
+                margin-top: 0.2%;
+                margin-bottom: 0.2%;
+                color: #fff;
+                background-color: #337ab7;
+                border-color: #2e6da4;
+            }
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+            margin-bottom: 0.2%;
+        }
+    </style>
+<h1>Sva odjeljenja</h1>
+
+
+
+@foreach (var i in Model.odjeljenja)
+{
+
+    if (i.Aktivno)
+    {
+        <button type="button" class="collapsible">@("Razrednik - " + i.Razrednik + " | Odjeljenje - " + i.Oznaka +" | Razred - "+ i.Razred+" | Školska godina - "+ i.SkolskaGodina)</button>
+    }
+    else
+    {
+        <button type="button" class="collapsible" style=" color: #fff; background-color: #6c757d; border-color: #6c757d;">@("Razrednik - " + i.Razrednik + " | Odjeljenje - " + i.Oznaka +" | Razred - "+ i.Razred+" | Školska godina - "+ i.SkolskaGodina)</button>
+    }
+
+
+<div class="content">
+    <table class="table table-bordered">
+        <tr>
+            <td>Ime (ime roditelja) prezime</td>
+            <td>Broj dnevnika</td>
+            <td>Prosječna ocjena</td>
+        </tr>
+        @foreach (var j in i.ucenici)
+        {
+            <tr>
+                <td>@j.ImeIPrezime </td>
+                <td>@j.BrojUDnevniku </td>
+                <td>@j.ProsjecnaOcjena  </td>
+            </tr>
+        }
+    </table>
+
+    @if (i.Aktivno)
+    {
+        <button type="button" class="collapsible">Prebaci ucenike u novo odjeljenje</button>
+
+    }
+    <div class="content">
+        <form action="/Odjeljenje/PrebaciUcenike" method="post" class="table table-bordered">
+            <label>Izaberite odjeljenje u koje želite da prebacite učenike koji su ispunili uvjete</label>
+            <div class="form-group col-md-5">
+                <select asp-for="@i.NovoOdjeljenjeId" name="NovoOdjeljenjeId" asp-items="@i.NovaOdjeljenja">
+                    <option selected disabled>Izaberite novo odjeljenje</option>
+                </select>
+            </div>
+            <input hidden name="StaroOdjljenjeId" asp-for="@i.OdjeljenjeId" />
+            <button type="submit" style="color:white; cursor:pointer;" class="btn btn-success float-right">Snimi</button>
+        </form>
+    </div>
+</div>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+
+    var btn = document.getElementsByClassName("PrebaciUcenikeBtn");
+    for (i = 0; i < btn.length; i++) {
+        btn[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var PrebaciUcenike = this.nextElementSibling;
+            if (PrebaciUcenike.style.display === "block") {
+                PrebaciUcenike.style.display = "none";
+            } else {
+                PrebaciUcenike.style.display = "block";
+            }
+        });
+    }
+
+</script>
+

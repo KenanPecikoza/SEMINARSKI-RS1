@@ -1,0 +1,41 @@
+﻿@using eDnevnik.data.ViewModels
+
+@{
+    ViewData["Title"] = "ZakljuciOcjenu";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@model ZakljuciOcjenuVM
+
+<h1>Predmet- @Model.Predmet / Predavac - @Model.Predavac </h1>
+<br />
+<br />
+<div class="container col-md-5 border-light " >
+    <form class="justify-content-md-center" method="post" asp-controller="Odjeljenje" asp-action="ZakljuciOcjenuSnimi">
+
+        <div class="form-row" >
+            <div class="col-md-7">
+                <label asp-for="Ucenik">Učenik</label>
+                <input asp-for="Ucenik" readonly class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Ocjena">Zaključna ocjena</label>
+                @if (Model.Ocjena > 0)
+                {
+                    <input asp-for="Ocjena" min="1" max="5" class="form-control" />
+                }
+                else
+                {
+                   <input asp-for="Ocjena" min="1" max="5" value="1" class="form-control" />
+                }
+            </div>
+        </div>
+        <input type="hidden" asp-for="UcenikID" />
+        <input type="hidden" asp-for="PredavacId" />
+        <br />
+        <button type="submit" style="color:white; cursor:pointer;" class="btn btn-success float-right">Snimi</button>
+
+    </form>
+
+</div>
+
+

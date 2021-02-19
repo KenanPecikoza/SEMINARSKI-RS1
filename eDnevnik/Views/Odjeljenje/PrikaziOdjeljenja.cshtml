@@ -1,0 +1,74 @@
+﻿@using SeminarskiRS1.Model
+@using eDnevnik.data.ViewModels;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Core.Common;
+@using eDnevnik.Helper;
+@using X.PagedList;
+@{
+
+    ViewData["Title"] = "PrikaziOdjeljenja";
+
+    string porukaNeuspjesno = (string)TempData["porukaNeuspjesno"];
+    string porukaUspjesno =  (string)TempData["porukaUspjesno"];
+}
+
+@model IPagedList<OdjeljenjePrikaziVM>
+
+<div class="container">
+
+    @if (porukaUspjesno != null )
+    {
+        <div class="alert alert-success" id="msg" role="alert">
+            @porukaUspjesno
+        </div>
+    }
+
+    @if (porukaNeuspjesno != null )
+    {
+        <div class="alert alert-danger" id="msg" role="alert">
+            @porukaNeuspjesno
+        </div>
+    }
+
+
+    <div class="row">
+        <h5 class="col-lg-10">Pregled Odjeljenja</h5>
+        <a class="col-lg-2 btn btn-primary" asp-action="DodajOdjeljenje" asp-controller="Odjeljenje">Dodaj odjeljenje</a>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <table id="myTable" class="table" style="text-align:center; ">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Razred</th>
+                    <th>Oznaka</th>
+                    <th>Razrednik</th>
+                    <th>Skolska Godina</th>
+                    <th>Smjena</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td>@x.Razred</td>
+                        <td>@x.Oznaka</td>
+                        <td>@x.Razrednik</td>
+                        <td>@x.SkolskaGodina</td>
+                        <td>@x.Smjena</td>
+                        <td>
+                            <a style="color:white" asp-action="DodjeliPredmet" asp-controller="Odjeljenje" asp-route-OID="@x.OdjeljenjeID" class="btn btn-info">Dodaj predmete</a>
+                            <a class="btn btn-primary" asp-action="OdjeljenjeDetalji" asp-controller="Odjeljenje" asp-route-OID="@x.OdjeljenjeID">Detalji</a>
+                            <a asp-action="OdjeljenjeUredi" asp-controller="Odjeljenje" asp-route-OID="@x.OdjeljenjeID" class="btn btn-success">Uredi</a>
+                            <a style="color:white;cursor:pointer;" asp-action="OdjeljenjeObrisi" asp-controller="Odjeljenje" asp-route-OID="@x.OdjeljenjeID" class="btn btn-danger">Obriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.PagedListPager(Model,
+            page => Url.Action("PrikaziOdjeljenja", new { page }), new PaginationStyling())
+    </div>
+</div>

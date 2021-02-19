@@ -1,0 +1,35 @@
+﻿@using eDnevnik.data.ViewModels;
+@using System.IO;
+@{
+    ViewData["Title"] = "Dodaj Skolsku Godinu";
+
+}
+@model SkolskaGodinaVM
+
+
+
+
+<div class="container col-md-5 border-light ">
+    <div class="row">
+        <a class="col-lg-4 btn btn-primary" asp-controller="SkolskaGodina" asp-action="Prikazi">Skolske godine </a>
+    </div>
+    <br />
+    <form class="justify-content-md-center" method="post" asp-controller="SkolskaGodina" asp-action="Snimi">
+        <div class="form-row">
+            <div class="col-md-7">
+                <label>Naziv</label>
+                <input asp-for="Naziv" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <span>Aktuelna</span>
+                <input asp-for="Aktuelna" class="form-control" style="display:inline" />
+            </div>
+        </div>
+        <input asp-for="SkolskaGodinaID" hidden class="form-control" />
+
+        <br />
+        <button type="submit" style="color:white; cursor:pointer;" class="btn btn-success float-right">Snimi</button>
+
+    </form>
+
+</div>
